@@ -7,9 +7,16 @@ interface RoomCardProps {
   price: number;
   currency: string;
   refundable: boolean;
+  onBookRoom: () => void;
 }
 
-export function RoomCard({ name, refundable, price, currency }: RoomCardProps) {
+export function RoomCard({
+  name,
+  refundable,
+  price,
+  currency,
+  onBookRoom,
+}: RoomCardProps) {
   return (
     <div className="flex gap-10.5 items-center bg-light-gray p-[17px] pb-4 pl-[23px] pr-[15px] rounded-[14px]">
       <div className="flex flex-col flex-1 gap-[3px]">
@@ -50,7 +57,7 @@ export function RoomCard({ name, refundable, price, currency }: RoomCardProps) {
         </span>
       </div>
 
-      <Button>
+      <Button onClick={onBookRoom}>
         <span className="font-normal text-xs">Reservar Agora</span>
       </Button>
     </div>

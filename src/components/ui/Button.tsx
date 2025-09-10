@@ -13,7 +13,7 @@ export function Button({
 
   const variantClasses = {
     primary: "bg-primary text-white h-9.5 inset-shadow-button",
-    secondary: "bg-white text-primary border border-primary",
+    secondary: "bg-transparent text-primary border border-primary",
   };
 
   return (

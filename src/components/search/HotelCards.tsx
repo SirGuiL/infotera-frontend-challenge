@@ -1,38 +1,16 @@
-"use client";
+import { HotelCard } from "@/components/search/HotelCard";
+import { HotelResponseDTO } from "@/dto/HotelResponseDTO";
+import { HotelCardsSkeleton } from "@/components/search/HotelCardsSkeleton";
 
-import { useQuery } from "@tanstack/react-query";
-
-import { HotelCard } from "./HotelCard";
-
-type fetchHotelsResponse = {
-  id: number;
-  lowestPrice: {
-    amount: number;
-    currency: string;
-  };
-  hotel: {
-    name: string;
-    image: string;
-    stars: number;
-  };
-};
-
-async function fetchHotels() {
-  const res = await fetch("http://localhost:3333/hotels");
-
-  return res.json();
+interface HotelCardsProps {
+  isLoading: boolean;
+  error: Error | null;
+  data: HotelResponseDTO[] | undefined;
 }
 
-export function HotelCards() {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["hotels"],
-    queryFn: fetchHotels,
-  });
-
-  console.log(data);
-
+export function HotelCards({ isLoading, error, data }: HotelCardsProps) {
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <HotelCardsSkeleton />;
   }
 
   if (error) {
@@ -47,7 +25,7 @@ export function HotelCards() {
         justifyContent: "space-between",
       }}
     >
-      {data.map(({ hotel, lowestPrice, id }: fetchHotelsResponse) => (
+      {data?.map(({ hotel, lowestPrice, id }) => (
         <HotelCard
           key={id}
           image={hotel.image}

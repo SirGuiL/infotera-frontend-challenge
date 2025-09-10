@@ -27,7 +27,7 @@ export function HotelCard({
 
   return (
     <div className="bg-white flex flex-col rounded-[14px] max-w-[397px]">
-      <div className="min-w-[397px] max-w-[397px] min-h-[265px] max-h-[265px] overflow-hidden relative">
+      <div className="min-w-[397px] max-w-[397px] min-h-[265px] max-h-[265px] rounded-[14px] overflow-hidden relative">
         <Image
           className="absolute top-0 left-0 rounded-[14px] z-10"
           src={image}
