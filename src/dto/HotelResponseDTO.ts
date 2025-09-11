@@ -1,5 +1,5 @@
 export interface HotelResponseDTO {
-  id: 76628740;
+  id: number;
   hotel: Hotel;
   lowestPrice: Price;
   rooms: Room[];

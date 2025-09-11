@@ -9,10 +9,8 @@ import { SearchEngine } from "@/components/ui/SearchEngine";
 import { Skeleton } from "@/components/ui/Skeleton";
 
 import { HotelResponseDTO } from "@/dto/HotelResponseDTO";
-import { sleep } from "@/utils/sleep";
 
 async function fetchHotels() {
-  await sleep(5000);
   const res = await fetch("http://localhost:3333/hotels");
 
   return (await res.json()) as HotelResponseDTO[];

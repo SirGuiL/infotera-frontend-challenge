@@ -10,7 +10,6 @@ import { RoomCard } from "@/components/hotel/RoomCard";
 import { HotelDetailsSkeleton } from "@/components/hotel/HotelDetailsSkeleton";
 
 import { Room } from "@/dto/HotelResponseDTO";
-import { sleep } from "@/utils/sleep";
 import { useBookingStore } from "@/store/bookingStore";
 
 interface HotelDetailsProps {
@@ -27,8 +26,6 @@ export function HotelDetails({ id }: HotelDetailsProps) {
   });
 
   async function getHotel() {
-    await sleep(5000);
-
     const res = await fetch(`http://localhost:3333/hotels/${id}`);
 
     return res.json();
@@ -36,6 +33,7 @@ export function HotelDetails({ id }: HotelDetailsProps) {
 
   async function handleBookRoom(room: Room) {
     bookingStore.setSelectedRoom(room);
+    bookingStore.setSelectedHotel(data);
     router.push("/checkout");
   }
 

@@ -9,7 +9,9 @@
   --color-yellow-custom: #f2bf09;
   --color-red-custom: #ff0000;
   --color-card-overlay: #0080ff0f;
+  --color-checkout-label: #273240;
   --drop-shadow-search: 0px 0px 9px 0px #00000017;
+  --drop-shadow-checkout-form: 0px 0px 11px 0px #0000001c;
   --inset-shadow-button: 0px 2px 9px 1px #0080ff4a;
 }
 
