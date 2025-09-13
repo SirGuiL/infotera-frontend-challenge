@@ -1,4 +1,14 @@
+"use client";
+
+import { useBookingStore } from "@/store/bookingStore";
+
 export function Footer() {
+  const bookingStore = useBookingStore();
+
+  if (bookingStore.isFinishedCheckout) {
+    return;
+  }
+
   return (
     <footer className="flex items-center justify-center bg-white w-full py-5 mt-auto">
       <span className="text-xs leading-[1.625rem]">

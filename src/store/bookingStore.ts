@@ -9,6 +9,8 @@ interface BookingState {
   setSelectedHotel: (hotel: HotelResponseDTO) => void;
   clearRoom: () => void;
   clearHotel: () => void;
+  isFinishedCheckout: boolean;
+  setIsFinishedCheckout: (finishedCheckout: boolean) => void;
 }
 
 export const useBookingStore = create<BookingState>((set) => ({
@@ -18,4 +20,7 @@ export const useBookingStore = create<BookingState>((set) => ({
   setSelectedHotel: (hotel: HotelResponseDTO) => set({ selectedHotel: hotel }),
   clearRoom: () => set({ selectedRoom: null }),
   clearHotel: () => set({ selectedHotel: null }),
+  isFinishedCheckout: false,
+  setIsFinishedCheckout: (isFinishedCheckout: boolean) =>
+    set({ isFinishedCheckout }),
 }));

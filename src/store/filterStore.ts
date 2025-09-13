@@ -1,0 +1,42 @@
+import { create } from "zustand";
+
+interface FilterState {
+  hotelName: string;
+  setHotelName: (hotelName: string) => void;
+
+  minPrice: number;
+  setMinPrice: (minPrice: number) => void;
+  maxPrice: number;
+  setMaxPrice: (maxPrice: number) => void;
+
+  starsFilter: number[];
+  setStarsFilter: (starsFilter: number[]) => void;
+
+  showStarsFilter: boolean;
+  setShowStarsFilter: (showStarsFilter: boolean) => void;
+  showPriceFilter: boolean;
+  setShowPriceFilter: (showPriceFilter: boolean) => void;
+
+  resetFilters: () => void;
+}
+
+export const useFilterStore = create<FilterState>((set) => ({
+  hotelName: "",
+  setHotelName: (hotelName: string) => set({ hotelName }),
+
+  minPrice: 0,
+  setMinPrice: (minPrice: number) => set({ minPrice }),
+  maxPrice: 1200,
+  setMaxPrice: (maxPrice: number) => set({ maxPrice }),
+
+  starsFilter: [],
+  setStarsFilter: (starsFilter: number[]) => set({ starsFilter }),
+
+  showStarsFilter: true,
+  setShowStarsFilter: (showStarsFilter: boolean) => set({ showStarsFilter }),
+  showPriceFilter: true,
+  setShowPriceFilter: (showPriceFilter: boolean) => set({ showPriceFilter }),
+
+  resetFilters: () =>
+    set({ starsFilter: [], minPrice: 0, maxPrice: 1200, hotelName: "" }),
+}));

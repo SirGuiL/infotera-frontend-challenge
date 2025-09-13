@@ -1,13 +1,15 @@
 "use client";
 
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import { checkoutSchema, CheckoutFormData } from "@/schemas/checkoutSchema";
 import { useBookingStore } from "@/store/bookingStore";
-import { zodResolver } from "@hookform/resolvers/zod";
+
 import { Button } from "@/components/ui/Button";
 import { CheckCircleIcon } from "@/components/icons/CheckCircle";
 import { XCircleIcon } from "@/components/icons/XCircle";
+import { FinishedCheckout } from "@/components/checkout/FinishedCheckout";
 
 export default function CheckoutPage() {
   const bookingStore = useBookingStore();
@@ -21,8 +23,12 @@ export default function CheckoutPage() {
 
   const onSubmit = (data: CheckoutFormData) => {
     console.log("Dados enviados:", data);
-    alert("Reserva finalizada com sucesso!");
+    bookingStore.setIsFinishedCheckout(true);
   };
+
+  if (bookingStore.isFinishedCheckout) {
+    return <FinishedCheckout />;
+  }
 
   return (
     <div className="pt-6.5">
@@ -267,8 +273,6 @@ export default function CheckoutPage() {
           </div>
         </form>
       </div>
-
-      <div></div>
     </div>
   );
 }
