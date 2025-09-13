@@ -1,7 +1,7 @@
 import { useFilterStore } from "@/store/filterStore";
 import { useState, useRef, useEffect } from "react";
 
-export default function RangeSlider() {
+export function RangeSlider() {
   const filterStore = useFilterStore();
 
   const sliderRef = useRef<HTMLDivElement>(null);

@@ -48,7 +48,7 @@ export function SuggestionsMenu() {
   }
 
   return (
-    <div className="w-[313px] rounded-lg overflow-hidden inset-shadow-menu">
+    <div className="w-[313px] rounded-lg overflow-hidden inset-shadow-menu hidden md:block">
       <div className="flex flex-col overflow-auto max-h-60 bg-white">
         {data?.map((suggestion) => (
           <SuggestionMenuItem
@@ -56,7 +56,10 @@ export function SuggestionsMenu() {
             name={suggestion.name}
             region={suggestion.region}
             highlight={searchStore.destination}
-            onClick={() => searchStore.setDestination(suggestion.name)}
+            onClick={() => {
+              searchStore.setDestination(suggestion.name);
+              searchStore.setRegion(suggestion.region);
+            }}
           />
         ))}
       </div>

@@ -1,33 +1,104 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useSearchParams } from "next/navigation";
 
 import { FilterIcon } from "@/components/icons/Filter";
 import { HotelCards } from "@/components/search/HotelCards";
+import { FiltersMenu } from "@/components/search/FiltersMenu";
 import { Button } from "@/components/ui/Button";
 import { SearchEngine } from "@/components/ui/SearchEngine";
-import { Skeleton } from "@/components/ui/Skeleton";
+import { Menu } from "@/components/ui/Menu";
 
 import { HotelResponseDTO } from "@/dto/HotelResponseDTO";
-import { Menu } from "@/components/ui/Menu";
-import { useState } from "react";
-import { FiltersMenu } from "@/components/search/FiltersMenu";
-import { sleep } from "@/utils/sleep";
+import { useSearchStore } from "@/store/searchStore";
+import { DestinationContainer } from "@/components/search/DestinationContainer";
+import { useFilterStore } from "@/store/filterStore";
 
-async function fetchHotels() {
-  await sleep(5000);
+interface fetchHotelsParams {
+  name: string;
+  price: [number, number];
+  stars: number[];
+}
 
-  const res = await fetch("http://localhost:3333/hotels");
+async function fetchHotels(params: fetchHotelsParams) {
+  const url = new URL("http://localhost:3333/hotels");
+  const queryParams = new URLSearchParams();
+
+  if (params.name) queryParams.append("q", params.name);
+
+  if (params.price[0])
+    queryParams.append("lowestPrice.amount_gte", params.price[0].toString());
+
+  if (params.price[1])
+    queryParams.append("lowestPrice.amount_lte", params.price[1].toString());
+
+  if (params.stars && params.stars.length > 0) {
+    params.stars.forEach((star) =>
+      queryParams.append("hotel.stars", star.toString())
+    );
+  }
+
+  url.search = queryParams.toString();
+
+  const res = await fetch(url.toString());
 
   return (await res.json()) as HotelResponseDTO[];
 }
 
 export default function SearchPage() {
+  const searchParams = useSearchParams();
+  const searchStore = useSearchStore();
+  const filtersStore = useFilterStore();
+
+  const {
+    setDestination,
+    setRegion,
+    setCheckinDate,
+    setCheckoutDate,
+    setAdultGuests,
+    setChildGuests,
+  } = searchStore;
+
+  useEffect(() => {
+    const destination = searchParams.get("destination");
+    if (destination) setDestination(destination);
+
+    const region = searchParams.get("region");
+    if (region) setRegion(region);
+
+    const checkin = searchParams.get("checkin");
+    if (checkin) setCheckinDate(new Date(checkin));
+
+    const checkout = searchParams.get("checkout");
+    if (checkout) setCheckoutDate(new Date(checkout));
+
+    const adults = searchParams.get("adults");
+    if (adults) setAdultGuests(parseInt(adults, 10));
+
+    const children = searchParams.get("children");
+    if (children) setChildGuests(parseInt(children, 10));
+  }, [
+    searchParams,
+    setDestination,
+    setRegion,
+    setCheckinDate,
+    setCheckoutDate,
+    setAdultGuests,
+    setChildGuests,
+  ]);
+
   const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false);
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["hotels"],
-    queryFn: fetchHotels,
+    queryFn: () =>
+      fetchHotels({
+        name: filtersStore.hotelName,
+        price: [filtersStore.minPrice, filtersStore.maxPrice],
+        stars: filtersStore.starsFilter,
+      }),
   });
 
   return (
@@ -35,19 +106,10 @@ export default function SearchPage() {
       <SearchEngine />
 
       <div className="flex justify-between mt-2 relative">
-        <div className="flex flex-col">
-          <span className="font-bold text-xl leading-[1.625rem] h-[1.625rem] text-default-text">
-            São Paulo,
-            <small className="font-normal"> Brasil </small>
-          </span>
-          {isLoading ? (
-            <Skeleton className="h-[1.625rem] w-36 bg-gray-300" />
-          ) : (
-            <span className="text-caption text-xs leading-[1.625rem]">
-              {data?.length} hoteis encontrados
-            </span>
-          )}
-        </div>
+        <DestinationContainer
+          hotelsLength={data?.length || 0}
+          isLoading={isLoading}
+        />
 
         <div className="flex items-center">
           <Button
@@ -68,6 +130,7 @@ export default function SearchPage() {
           >
             <FiltersMenu
               handleCloseFiltersMenu={() => setIsFilterMenuOpen(false)}
+              handleRefetch={() => refetch()}
             />
           </Menu>
         </div>

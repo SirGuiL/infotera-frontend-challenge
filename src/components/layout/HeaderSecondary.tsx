@@ -8,7 +8,7 @@ export function HeaderSecondary() {
 
   return (
     <div className="bg-white w-full py-[17px] flex justify-center">
-      <div className="flex justify-between px-16 max-w-360 w-full">
+      <div className="flex justify-between px-4 md:px-16 max-w-360 w-full">
         <h1 className="font-bold text-xl text-default-text">infotravel</h1>
 
         <div className="flex items-center gap-4.5">

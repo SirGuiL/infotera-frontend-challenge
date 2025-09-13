@@ -30,7 +30,7 @@ export default function RootLayout({
         <div className="flex flex-col min-h-screen min-w-full">
           <Header />
 
-          <div className="flex-1 flex flex-col max-w-360 w-full mx-auto px-16">
+          <div className="flex-1 flex flex-col max-w-360 w-full mx-auto px-4 md:px-16">
             <QueryProvider>{children}</QueryProvider>
           </div>
 

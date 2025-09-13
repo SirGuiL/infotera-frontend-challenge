@@ -2,7 +2,7 @@ import { ErrorIcon } from "@/components/icons/Error";
 
 export function SuggestionMenuError() {
   return (
-    <div className="flex flex-col gap-2 items-center py-8 w-[313px] bg-white rounded-lg overflow-hidden inset-shadow-menu">
+    <div className="hidden md:flex flex-col gap-2 items-center py-8 w-[313px] bg-white rounded-lg overflow-hidden inset-shadow-menu">
       <div className="fill-red-custom w-8 h-8">
         <ErrorIcon />
       </div>

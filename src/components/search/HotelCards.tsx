@@ -1,6 +1,9 @@
 import { HotelCard } from "@/components/search/HotelCard";
-import { HotelResponseDTO } from "@/dto/HotelResponseDTO";
 import { HotelCardsSkeleton } from "@/components/search/HotelCardsSkeleton";
+import { NoHotelFound } from "@/components/search/NoHotelFound";
+import { HotelCardsError } from "@/components/search/HotelCardsError";
+
+import { HotelResponseDTO } from "@/dto/HotelResponseDTO";
 
 interface HotelCardsProps {
   isLoading: boolean;
@@ -14,7 +17,11 @@ export function HotelCards({ isLoading, error, data }: HotelCardsProps) {
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <HotelCardsError />;
+  }
+
+  if (!data || data?.length === 0) {
+    return <NoHotelFound />;
   }
 
   return (

@@ -1,21 +1,32 @@
+import { useEffect } from "react";
 import { AnimatePresence, motion } from "motion/react";
 
 import { useClickOutside } from "@/hooks/useClickOutside";
 import { useFilterStore } from "@/store/filterStore";
 
 import { DeleteIcon } from "@/components/icons/Delete";
-import { Separator } from "@/components/ui/Separator";
 import { ArrowDownIcon } from "@/components/icons/ArrowDown";
-import RangeSlider from "@/components/ui/RangeSlider";
-import { Checkbox } from "../ui/Checkbox";
+import { Separator } from "@/components/ui/Separator";
+import { RangeSlider } from "@/components/ui/RangeSlider";
+import { Checkbox } from "@/components/ui/Checkbox";
+
+import { useDebounce } from "@/hooks/useDebounce";
 
 interface FiltersMenuProps {
   handleCloseFiltersMenu: () => void;
+  handleRefetch: () => void;
 }
 
-export function FiltersMenu({ handleCloseFiltersMenu }: FiltersMenuProps) {
-  const ref = useClickOutside(handleCloseFiltersMenu);
+export function FiltersMenu({
+  handleCloseFiltersMenu,
+  handleRefetch,
+}: FiltersMenuProps) {
   const filterStore = useFilterStore();
+
+  const { hotelName, maxPrice, minPrice, starsFilter } = filterStore;
+
+  const { debounced } = useDebounce(handleRefetch, 1500);
+  const ref = useClickOutside(handleCloseFiltersMenu);
 
   function handleSelectStars(stars: number) {
     if (filterStore.starsFilter.includes(stars)) {
@@ -26,6 +37,11 @@ export function FiltersMenu({ handleCloseFiltersMenu }: FiltersMenuProps) {
 
     return filterStore.setStarsFilter([...filterStore.starsFilter, stars]);
   }
+
+  useEffect(
+    () => debounced,
+    [hotelName, maxPrice, minPrice, starsFilter, debounced]
+  );
 
   return (
     <div

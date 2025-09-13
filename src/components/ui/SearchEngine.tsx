@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
@@ -13,7 +14,6 @@ import { GuestsMenu } from "@/components/search/GuestsMenu";
 
 import { useSearchStore } from "@/store/searchStore";
 import { sleep } from "@/utils/sleep";
-import { useRouter } from "next/navigation";
 
 export function SearchEngine() {
   const searchStore = useSearchStore();
@@ -33,25 +33,52 @@ export function SearchEngine() {
   }
 
   function handleSearch() {
-    router.push(`/search?destination=${searchStore.destination}`);
+    const rawParams = {
+      destination: searchStore.destination,
+      region: searchStore.region,
+      checkin: searchStore.checkinDate?.toString(),
+      checkout: searchStore.checkoutDate?.toString(),
+      adults: searchStore.adultGuests?.toString(),
+      children: searchStore.childGuests?.toString(),
+    };
+
+    const cleanedParams = Object.fromEntries(
+      Object.entries(rawParams).filter(([, v]) => v)
+    );
+
+    const params = new URLSearchParams(cleanedParams);
+
+    router.push(`/search?${params.toString()}`);
+  }
+
+  function formatRoomsLabel() {
+    const capacityPerRoom = 2;
+    const total = searchStore.adultGuests + searchStore.childGuests;
+
+    const rooms = Math.ceil(total / capacityPerRoom);
+
+    const adultsLabel = `${searchStore.adultGuests} ${
+      searchStore.adultGuests === 1 ? "Adulto" : "Adultos"
+    }`;
+    const roomsLabel = `${rooms} ${rooms === 1 ? "Quarto" : "Quartos"}`;
+
+    return `${adultsLabel}, ${roomsLabel}`;
   }
 
   return (
-    <div className="flex justify-between items-center w-full bg-white pl-4 pr-2.5 py-2.5 drop-shadow-search rounded-xl">
-      <div className="flex flex-col">
+    <div className="grid grid-cols-2 md:flex gap-4 md:gap-0 justify-between items-center w-full bg-white pl-4 pr-2.5 py-[9px] drop-shadow-search rounded-xl">
+      <div className="flex flex-col flex-1 order-1">
         <div className="flex items-center gap-2">
           <div className="stroke-primary w-[13px] h-3.5">
             <LocationIcon />
           </div>
 
-          <span className="text-caption text-xs leading-[1.625rem]">
-            Destino
-          </span>
+          <span className="text-caption text-xs leading-6">Destino</span>
         </div>
 
         <input
           type="text"
-          className="text-default-text font-semibold text-xs leading-[1.625rem] ring-0 outline-0 border-0"
+          className="text-default-text font-semibold text-xs leading-[1.625rem] -mt-0.5 ring-0 outline-0 border-0 w-1/2 md:w-auto"
           value={searchStore.destination}
           onChange={(e) => searchStore.setDestination(e.target.value)}
           onFocus={() => openDestinationMenu()}
@@ -67,7 +94,7 @@ export function SearchEngine() {
       </div>
 
       <div
-        className="flex flex-col"
+        className="flex flex-col flex-1 order-2 border-0 md:border-l border-default-border border-[#E3E6E9] md:pl-3.5"
         onClick={() => setIsCheckinCalendarOpen(true)}
       >
         <div className="flex items-center gap-2">
@@ -75,12 +102,10 @@ export function SearchEngine() {
             <LocationIcon />
           </div>
 
-          <span className="text-caption text-xs leading-[1.625rem]">
-            Entrada
-          </span>
+          <span className="text-caption text-xs leading-6">Entrada</span>
         </div>
 
-        <span className="text-default-text font-semibold text-xs leading-[1.625rem]">
+        <span className="text-default-text font-semibold text-xs leading-[1.625rem] -mt-0.5">
           {format(searchStore.checkinDate, "dd/MM/yyyy", {
             locale: ptBR,
           })}
@@ -96,7 +121,7 @@ export function SearchEngine() {
       </div>
 
       <div
-        className="flex flex-col"
+        className="flex flex-col md:flex-1 order-3 border-0 md:border-l border-default-border border-[#E3E6E9] md:pl-3.5"
         onClick={() => setIsCheckoutCalendarOpen(true)}
       >
         <div className="flex items-center gap-2">
@@ -104,10 +129,10 @@ export function SearchEngine() {
             <LocationIcon />
           </div>
 
-          <span className="text-caption text-xs leading-[1.625rem]">Saída</span>
+          <span className="text-caption text-xs leading-6">Saída</span>
         </div>
 
-        <span className="text-default-text font-semibold text-xs leading-[1.625rem]">
+        <span className="text-default-text font-semibold text-xs leading-[1.625rem] -mt-0.5">
           {format(searchStore.checkoutDate, "dd/MM/yyyy", {
             locale: ptBR,
           })}
@@ -122,19 +147,20 @@ export function SearchEngine() {
         </Menu>
       </div>
 
-      <div className="flex flex-col" onClick={() => setIsGuestsMenuOpen(true)}>
+      <div
+        className="flex flex-col flex-1 order-1 md:order-4 border-0 md:border-l border-default-border border-[#E3E6E9] md:pl-3.5"
+        onClick={() => setIsGuestsMenuOpen(true)}
+      >
         <div className="flex items-center gap-2">
           <div className="stroke-primary w-[13px] h-3.5">
             <LocationIcon />
           </div>
 
-          <span className="text-caption text-xs leading-[1.625rem]">
-            Hóspedes
-          </span>
+          <span className="text-caption text-xs leading-6">Hóspedes</span>
         </div>
 
-        <span className="text-default-text font-semibold text-xs leading-[1.625rem]">
-          {searchStore.adultGuests} Adultos, {searchStore.childGuests} Quarto
+        <span className="text-default-text font-semibold text-xs leading-[1.625rem] -mt-0.5">
+          {formatRoomsLabel()}
         </span>
 
         <Menu isOpen={isGuestsMenuOpen}>
@@ -146,7 +172,11 @@ export function SearchEngine() {
         </Menu>
       </div>
 
-      <Button variant="primary" onClick={() => handleSearch()}>
+      <Button
+        variant="primary"
+        onClick={() => handleSearch()}
+        className="order-5 w-full md:w-auto col-span-2 md:col-span-1"
+      >
         <span className="text-xs font-normal">Pesquisar</span>
       </Button>
     </div>
