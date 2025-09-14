@@ -31,15 +31,15 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="pt-6.5">
-      <div className="flex flex-col gap-2">
+    <div className="pt-6.5 pb-10 md:pb-0">
+      <div className="flex flex-col gap-4 md:gap-2">
         <span className="font-bold text-default-text text-base leading-4">
           Finalize sua reserva!
         </span>
 
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="mt-[1px] flex gap-[21px]"
+          className="mt-[1px] flex flex-col md:flex-row gap-[21px]"
         >
           <div className="flex flex-col gap-5 flex-1">
             <div className="flex flex-col gap-2 bg-white p-5 rounded-[14px] drop-shadow-checkout-form">
@@ -47,7 +47,7 @@ export default function CheckoutPage() {
                 Hotel: {bookingStore.selectedHotel?.hotel.name}
               </span>
 
-              <div className="mt-[1px] flex gap-[15px]">
+              <div className="mt-[1px] grid grid-cols-2 md:flex gap-[15px]">
                 <div className="flex flex-col gap-[5px]">
                   <label
                     htmlFor="name"
@@ -58,7 +58,7 @@ export default function CheckoutPage() {
 
                   <input
                     {...register("name")}
-                    className="border border-[#DEDEDE] rounded w-[205px] text-[13px] text-checkout-label leading-5 h-7 py-2 px-3 ring-0 focus:ring-0 focus:outline-none"
+                    className="border border-[#DEDEDE] rounded md:w-[205px] text-[13px] text-checkout-label leading-5 h-7 py-2 px-3 ring-0 focus:ring-0 focus:outline-none"
                     placeholder="Primeiro nome do hóspede"
                     id="name"
                   />
@@ -80,7 +80,7 @@ export default function CheckoutPage() {
 
                   <input
                     {...register("lastName")}
-                    className="border border-[#DEDEDE] rounded w-[205px] text-[13px] text-checkout-label leading-5 h-7 py-2 px-3 ring-0 focus:ring-0 focus:outline-none"
+                    className="border border-[#DEDEDE] rounded md:w-[205px] text-[13px] text-checkout-label leading-5 h-7 py-2 px-3 ring-0 focus:ring-0 focus:outline-none"
                     placeholder="Sobrenome do hóspede"
                     id="lastName"
                   />
@@ -99,8 +99,8 @@ export default function CheckoutPage() {
                 Contato da reserva
               </span>
 
-              <div className="mt-[1px] flex gap-[15px]">
-                <div className="flex flex-col gap-[5px]">
+              <div className="mt-[1px] grid grid-cols-2 md:flex gap-[15px]">
+                <div className="flex col-span-2 flex-col gap-[5px]">
                   <label
                     htmlFor="contactName"
                     className="font-semibold text-[13px] text-checkout-label leading-4 h-4"
@@ -110,8 +110,8 @@ export default function CheckoutPage() {
 
                   <input
                     {...register("contactName")}
-                    className="border border-[#DEDEDE] rounded w-[205px] text-[13px] text-checkout-label leading-5 h-7 py-2 px-3 ring-0 focus:ring-0 focus:outline-none"
-                    placeholder="Primeiro nome do hóspede"
+                    className="border border-[#DEDEDE] rounded md:w-[205px] text-[13px] text-checkout-label leading-5 h-7 py-2 px-3 ring-0 focus:ring-0 focus:outline-none"
+                    placeholder="Nome de contato"
                     id="contactName"
                   />
 
@@ -132,8 +132,8 @@ export default function CheckoutPage() {
 
                   <input
                     {...register("contactEmail")}
-                    className="border border-[#DEDEDE] rounded w-[205px] text-[13px] text-checkout-label leading-5 h-7 py-2 px-3 ring-0 focus:ring-0 focus:outline-none"
-                    placeholder="Sobrenome do hóspede"
+                    className="border border-[#DEDEDE] rounded md:w-[205px] text-[13px] text-checkout-label leading-5 h-7 py-2 px-3 ring-0 focus:ring-0 focus:outline-none"
+                    placeholder="E-mail de contato"
                     id="contactEmail"
                   />
 
@@ -154,8 +154,8 @@ export default function CheckoutPage() {
 
                   <input
                     {...register("contactPhone")}
-                    className="border border-[#DEDEDE] rounded w-[205px] text-[13px] text-checkout-label leading-5 h-7 py-2 px-3 ring-0 focus:ring-0 focus:outline-none"
-                    placeholder="Sobrenome do hóspede"
+                    className="border border-[#DEDEDE] rounded md:w-[205px] text-[13px] text-checkout-label leading-5 h-7 py-2 px-3 ring-0 focus:ring-0 focus:outline-none"
+                    placeholder="Telefone de contato"
                     id="contactPhone"
                   />
 
@@ -191,7 +191,7 @@ export default function CheckoutPage() {
             </div>
           </div>
 
-          <div className="bg-white rounded-[14px] drop-shadow-checkout-form p-4.5 flex flex-col gap-[33px] self-start">
+          <div className="bg-white rounded-[14px] w-full md:w-auto drop-shadow-checkout-form p-4.5 flex flex-col gap-[33px] self-start">
             <div className="flex flex-col gap-2">
               <span className="font-bold text-primary text-base leading-4">
                 Sua reserva
