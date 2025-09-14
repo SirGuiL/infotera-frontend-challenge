@@ -48,7 +48,7 @@ export function SuggestionsMenu() {
   }
 
   return (
-    <div className="w-[313px] rounded-lg overflow-hidden inset-shadow-menu hidden md:block">
+    <div className="w-[313px] rounded-lg overflow-hidden inset-shadow-menu block">
       <div className="flex flex-col overflow-auto max-h-60 bg-white">
         {data?.map((suggestion) => (
           <SuggestionMenuItem

@@ -21,10 +21,9 @@ export default function CheckoutPage() {
     resolver: zodResolver(checkoutSchema),
   });
 
-  const onSubmit = (data: CheckoutFormData) => {
-    console.log("Dados enviados:", data);
+  function onSubmit() {
     bookingStore.setIsFinishedCheckout(true);
-  };
+  }
 
   if (bookingStore.isFinishedCheckout) {
     return <FinishedCheckout />;

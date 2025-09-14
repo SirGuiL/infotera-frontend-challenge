@@ -1,5 +1,13 @@
 import { create } from "zustand";
 
+export type SortField = "price" | "rating" | "name";
+type SortDirection = "asc" | "desc";
+
+type SortBy = {
+  field: SortField;
+  direction: SortDirection;
+};
+
 interface FilterState {
   hotelName: string;
   setHotelName: (hotelName: string) => void;
@@ -16,6 +24,9 @@ interface FilterState {
   setShowStarsFilter: (showStarsFilter: boolean) => void;
   showPriceFilter: boolean;
   setShowPriceFilter: (showPriceFilter: boolean) => void;
+
+  sortBy: SortBy | null;
+  setSortBy: (sortBy: SortBy) => void;
 
   resetFilters: () => void;
 }
@@ -36,6 +47,9 @@ export const useFilterStore = create<FilterState>((set) => ({
   setShowStarsFilter: (showStarsFilter: boolean) => set({ showStarsFilter }),
   showPriceFilter: true,
   setShowPriceFilter: (showPriceFilter: boolean) => set({ showPriceFilter }),
+
+  sortBy: null,
+  setSortBy: (sortBy: SortBy) => set({ sortBy }),
 
   resetFilters: () =>
     set({ starsFilter: [], minPrice: 0, maxPrice: 1200, hotelName: "" }),

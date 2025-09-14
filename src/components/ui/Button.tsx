@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "motion/react";
-import { ReactNode, useState } from "react";
+import { MouseEvent, ReactNode, useState } from "react";
 
 interface ButtonProps {
   variant?: "primary" | "secondary";
@@ -7,7 +7,7 @@ interface ButtonProps {
   className?: string;
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
 type Ripple = {
@@ -24,10 +24,11 @@ export function Button({
   ...props
 }: ButtonProps) {
   const baseClasses =
-    "cursor-pointer rounded-full px-7 relative overflow-hidden";
+    "cursor-pointer rounded-full px-7 relative overflow-hidden disabled:cursor-not-allowed";
 
   const variantClasses = {
-    primary: "bg-primary text-white h-9.5 inset-shadow-button",
+    primary:
+      "bg-primary text-white h-9.5 inset-shadow-button disabled:opacity-50",
     secondary: "bg-transparent text-primary border border-primary",
   };
 

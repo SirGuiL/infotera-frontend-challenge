@@ -3,8 +3,8 @@ import { Skeleton } from "@/components/ui/Skeleton";
 export function HotelDetailsSkeleton() {
   return (
     <div className="flex flex-col gap-[41.49px] pt-4 pl-4 pb-[19px] pr-[25px] bg-white rounded-[14px]">
-      <div className="flex gap-4">
-        <div className="min-w-[447px] max-w-[447px] h-[312px] rounded-xl bg-gray-200 animate-pulse"></div>
+      <div className="flex flex-col md:flex-row gap-4">
+        <Skeleton className="w-full md:w-auto h-[312px]" />
 
         <div className="w-full">
           <Skeleton className="h-[1.625rem] w-3/4" />

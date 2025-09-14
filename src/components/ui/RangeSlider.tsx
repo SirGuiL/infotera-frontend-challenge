@@ -1,7 +1,11 @@
 import { useFilterStore } from "@/store/filterStore";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 
-export function RangeSlider() {
+interface RangeSliderProps {
+  onChange: () => void;
+}
+
+export function RangeSlider({ onChange }: RangeSliderProps) {
   const filterStore = useFilterStore();
 
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -11,6 +15,10 @@ export function RangeSlider() {
   const max = 1200;
 
   const getPercent = (value: number) => ((value - min) / (max - min)) * 100;
+
+  const handleChange = useCallback(() => {
+    onChange();
+  }, [onChange]);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -28,7 +36,13 @@ export function RangeSlider() {
       filterStore.setMaxPrice(Math.max(value, filterStore.minPrice + 1));
     };
 
-    const handleMouseUp = () => setDragging(null);
+    const handleMouseUp = () => {
+      if (dragging) {
+        handleChange();
+      }
+
+      setDragging(null);
+    };
 
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseup", handleMouseUp);
@@ -37,7 +51,7 @@ export function RangeSlider() {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
     };
-  }, [dragging, filterStore]);
+  }, [dragging, filterStore, handleChange]);
 
   return (
     <div className="w-full px-4 h-4 flex items-center">

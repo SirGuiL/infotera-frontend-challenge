@@ -26,13 +26,13 @@ export function HotelCard({
   const router = useRouter();
 
   return (
-    <div className="bg-white flex flex-col rounded-[14px] max-w-[397px]">
-      <div className="min-w-[397px] max-w-[397px] min-h-[265px] max-h-[265px] rounded-[14px] overflow-hidden relative">
+    <div className="bg-white flex flex-col rounded-[14px] w-full md:w-auto md:max-w-[397px]">
+      <div className="md:min-w-[397px] w-full md:w-auto md:max-w-[397px] min-h-[265px] max-h-[265px] rounded-[14px] overflow-hidden relative">
         <Image
           className="absolute top-0 left-0 rounded-[14px]"
           src={image}
           alt={name}
-          width={397}
+          width={700}
           height={265}
         />
 
@@ -45,7 +45,7 @@ export function HotelCard({
             minimumFractionDigits: 0,
             maximumFractionDigits: 2,
           })}{" "}
-          <small className="text-caption text-xs">/ noite</small>{" "}
+          <small className="text-white text-xs">/ noite</small>{" "}
         </span>
       </div>
 

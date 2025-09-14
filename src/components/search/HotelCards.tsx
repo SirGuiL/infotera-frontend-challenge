@@ -25,13 +25,7 @@ export function HotelCards({ isLoading, error, data }: HotelCardsProps) {
   }
 
   return (
-    <div
-      className="grid grid-flow-row auto-rows-max gap-y-[53px] gap-x-8"
-      style={{
-        gridTemplateColumns: "repeat(auto-fill, 397px)",
-        justifyContent: "space-between",
-      }}
-    >
+    <div className="grid grid-flow-row auto-rows-max md:grid-cols-[repeat(auto-fill,_397px)] gap-y-[53px] gap-x-8 md:justify-between">
       {data?.map(({ hotel, lowestPrice, id }) => (
         <HotelCard
           key={id}

@@ -4,22 +4,27 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 
+import { SwapVertIcon } from "@/components/icons/SwapVert";
 import { FilterIcon } from "@/components/icons/Filter";
 import { HotelCards } from "@/components/search/HotelCards";
 import { FiltersMenu } from "@/components/search/FiltersMenu";
+import { OrderMenu } from "@/components/search/OrderMenu";
+import { DestinationContainer } from "@/components/search/DestinationContainer";
 import { Button } from "@/components/ui/Button";
 import { SearchEngine } from "@/components/ui/SearchEngine";
 import { Menu } from "@/components/ui/Menu";
 
 import { HotelResponseDTO } from "@/dto/HotelResponseDTO";
 import { useSearchStore } from "@/store/searchStore";
-import { DestinationContainer } from "@/components/search/DestinationContainer";
-import { useFilterStore } from "@/store/filterStore";
+import { SortField, useFilterStore } from "@/store/filterStore";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 interface fetchHotelsParams {
-  name: string;
+  name?: string;
   price: [number, number];
-  stars: number[];
+  stars?: number[];
+  sort?: string;
+  order?: string;
 }
 
 async function fetchHotels(params: fetchHotelsParams) {
@@ -40,6 +45,9 @@ async function fetchHotels(params: fetchHotelsParams) {
     );
   }
 
+  if (params.sort) queryParams.append("_sort", params.sort);
+  if (params.order) queryParams.append("_order", params.order);
+
   url.search = queryParams.toString();
 
   const res = await fetch(url.toString());
@@ -51,6 +59,10 @@ export default function SearchPage() {
   const searchParams = useSearchParams();
   const searchStore = useSearchStore();
   const filtersStore = useFilterStore();
+  const isSmallScreen = useMediaQuery("(max-width: 767px)");
+
+  const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false);
+  const [isOrderMenuOpen, setIsOrderMenuOpen] = useState(false);
 
   const {
     setDestination,
@@ -89,17 +101,33 @@ export default function SearchPage() {
     setChildGuests,
   ]);
 
-  const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false);
-
-  const { data, isLoading, error, refetch } = useQuery({
+  const { data, isLoading, isRefetching, error, refetch } = useQuery({
     queryKey: ["hotels"],
+    refetchOnWindowFocus: false,
     queryFn: () =>
       fetchHotels({
         name: filtersStore.hotelName,
         price: [filtersStore.minPrice, filtersStore.maxPrice],
         stars: filtersStore.starsFilter,
+        order: filtersStore.sortBy?.direction,
+        sort: formatField(filtersStore.sortBy?.field),
       }),
   });
+
+  function formatField(field: SortField | undefined) {
+    if (!field) return undefined;
+
+    switch (field) {
+      case "price":
+        return "lowestPrice.amount";
+      case "rating":
+        return "hotel.stars";
+      case "name":
+        return "hotel.name";
+      default:
+        return field;
+    }
+  }
 
   return (
     <div className="flex-1 flex flex-col gap-5 h-full py-6.5">
@@ -108,35 +136,63 @@ export default function SearchPage() {
       <div className="flex justify-between mt-2 relative">
         <DestinationContainer
           hotelsLength={data?.length || 0}
-          isLoading={isLoading}
+          isLoading={isLoading || isRefetching}
         />
 
         <div className="flex items-center">
-          <Button
-            className="stroke-primary w-[49px] h-9.5 flex items-center justify-center pl-0 pr-0"
-            variant="secondary"
-            onClick={() => setIsFilterMenuOpen(true)}
+          <Menu
+            isOpen={isOrderMenuOpen}
+            side="right"
+            marginRight="-right-16"
+            marginTop="top-6"
           >
-            <div className="min-w-6 max-w-6 h-6">
-              <FilterIcon />
-            </div>
-          </Button>
+            <OrderMenu
+              handleCloseOrderMenu={() => setIsOrderMenuOpen(false)}
+              handleRefetch={refetch}
+            />
+          </Menu>
+
+          <div className="flex gap-2">
+            <Button
+              className="stroke-primary w-[49px] h-9.5 flex items-center justify-center pl-0 pr-0"
+              variant="secondary"
+              onClick={() => setIsOrderMenuOpen(true)}
+            >
+              <div className="min-w-6 max-w-6 h-6 fill-primary">
+                <SwapVertIcon />
+              </div>
+            </Button>
+
+            <Button
+              className="stroke-primary w-[49px] h-9.5 flex items-center justify-center pl-0 pr-0"
+              variant="secondary"
+              onClick={() => setIsFilterMenuOpen(true)}
+            >
+              <div className="min-w-6 max-w-6 h-6">
+                <FilterIcon />
+              </div>
+            </Button>
+          </div>
 
           <Menu
             isOpen={isFilterMenuOpen}
             side="right"
-            marginRight={"-right-4.5"}
-            marginTop={"top-6"}
+            marginRight={isSmallScreen ? "-right-2.5" : "-right-4.5"}
+            marginTop="top-6"
           >
             <FiltersMenu
               handleCloseFiltersMenu={() => setIsFilterMenuOpen(false)}
-              handleRefetch={() => refetch()}
+              handleRefetch={refetch}
             />
           </Menu>
         </div>
       </div>
 
-      <HotelCards data={data} isLoading={isLoading} error={error} />
+      <HotelCards
+        data={data}
+        isLoading={isLoading || isRefetching}
+        error={error}
+      />
     </div>
   );
 }

@@ -34,7 +34,7 @@ export function Menu({
           >
             <div
               className={`absolute ${
-                side === "right" ? "right-8" : "left-2"
+                side === "right" ? "right-7" : "left-2"
               } -top-2 w-0 h-0 
                           border-l-8 border-r-8 border-b-8 
                           border-l-transparent border-r-transparent border-b-white`}

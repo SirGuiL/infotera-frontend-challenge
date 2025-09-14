@@ -43,52 +43,52 @@ export function GuestsMenu({ handleCloseGuestsMenu }: GuestsMenuProps) {
       ref={ref}
     >
       <div className="flex flex-col overflow-auto bg-white pt-0.5 pb-2.5 px-2.5">
-        <div className="flex flex-col gap-[5px]">
-          <span className="text-default-text font-semibold text-[10px] leading-[1.625rem]">
+        <div className="flex flex-col gap-2 md:gap-[5px]">
+          <span className="text-default-text font-semibold text-xs md:text-[10px] leading-[1.625rem]">
             Adultos
           </span>
 
           <div className="flex justify-between items-center">
             <button
-              className="flex items-center justify-center h-[15px] w-[15px] bg-light-gray rounded-full cursor-pointer"
+              className="flex items-center justify-center h-5 w-5 md:h-[15px] md:w-[15px] bg-light-gray rounded-full cursor-pointer"
               onClick={handleRemoveAdult}
             >
-              <span className="text-[8px] font-semibold">-</span>
+              <span className="text-xs md:text-[8px] font-semibold">-</span>
             </button>
 
-            <span className="text-[0.5rem]"> {adultGuests} </span>
+            <span className="text-xs md:text-[0.5rem]"> {adultGuests} </span>
 
             <button
-              className="flex items-center justify-center h-[15px] w-[15px] bg-light-gray rounded-full cursor-pointer"
+              className="flex items-center justify-center h-5 w-5 md:h-[15px] md:w-[15px] bg-light-gray rounded-full cursor-pointer"
               onClick={() => setAdultGuests(adultGuests + 1)}
             >
-              <span className="text-[8px] font-semibold">+</span>
+              <span className="text-xs md:text-[8px] font-semibold">+</span>
             </button>
           </div>
 
           <Separator className="border-light-gray mt-2" />
         </div>
 
-        <div className="flex flex-col gap-[5px]">
-          <span className="text-default-text font-semibold text-[10px] leading-[1.625rem]">
+        <div className="flex flex-col gap-2 md:gap-[5px]">
+          <span className="text-default-text font-semibold text-xs md:text-[10px] leading-[1.625rem]">
             Crianças
           </span>
 
           <div className="flex justify-between items-center">
             <button
-              className="flex items-center justify-center h-[15px] w-[15px] bg-light-gray rounded-full cursor-pointer"
+              className="flex items-center justify-center h-5 w-5 md:h-[15px] md:w-[15px] bg-light-gray rounded-full cursor-pointer"
               onClick={handleRemoveChild}
             >
-              <span className="text-[8px] font-semibold">-</span>
+              <span className="text-xs md:text-[8px] font-semibold">-</span>
             </button>
 
-            <span className="text-[0.5rem]"> {childGuests} </span>
+            <span className="text-xs md:text-[0.5rem]"> {childGuests} </span>
 
             <button
-              className="flex items-center justify-center h-[15px] w-[15px] bg-light-gray rounded-full cursor-pointer"
+              className="flex items-center justify-center h-5 w-5 md:h-[15px] md:w-[15px] bg-light-gray rounded-full cursor-pointer"
               onClick={() => setChildGuests(childGuests + 1)}
             >
-              <span className="text-[8px] font-semibold">+</span>
+              <span className="text-xs md:text-[8px] font-semibold">+</span>
             </button>
           </div>
 
@@ -97,10 +97,12 @@ export function GuestsMenu({ handleCloseGuestsMenu }: GuestsMenuProps) {
 
         <Button
           variant="secondary"
-          className="flex items-center justify-center min-h-[19px] max-h-[19px] w-15 pl-0 pr-0 py-0 max-w-15 mt-[13px] self-end"
+          className="flex items-center justify-center min-h-[19px] md:max-h-[19px] md:w-15 pl-2 md:pl-0 pr-2 md:pr-0 py-1 md:py-0 md:max-w-15 mt-[13px] self-end"
           onClick={handleApplyGuests}
         >
-          <span className="text-primary text-[0.5rem] ">Aplicar</span>
+          <span className="text-primary text-xs md:text-[0.5rem] ">
+            Aplicar
+          </span>
         </Button>
       </div>
     </div>

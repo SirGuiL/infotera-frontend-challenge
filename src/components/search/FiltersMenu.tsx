@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+"use client";
+
 import { AnimatePresence, motion } from "motion/react";
 
 import { useClickOutside } from "@/hooks/useClickOutside";
@@ -23,9 +24,7 @@ export function FiltersMenu({
 }: FiltersMenuProps) {
   const filterStore = useFilterStore();
 
-  const { hotelName, maxPrice, minPrice, starsFilter } = filterStore;
-
-  const { debounced } = useDebounce(handleRefetch, 1500);
+  const { debounced } = useDebounce(handleRefetch, 500);
   const ref = useClickOutside(handleCloseFiltersMenu);
 
   function handleSelectStars(stars: number) {
@@ -37,11 +36,6 @@ export function FiltersMenu({
 
     return filterStore.setStarsFilter([...filterStore.starsFilter, stars]);
   }
-
-  useEffect(
-    () => debounced,
-    [hotelName, maxPrice, minPrice, starsFilter, debounced]
-  );
 
   return (
     <div
@@ -56,7 +50,10 @@ export function FiltersMenu({
         <motion.button
           className="flex items-center gap-[5px] cursor-pointer"
           whileTap={{ scale: 0.95 }}
-          onClick={() => filterStore.resetFilters()}
+          onClick={() => {
+            filterStore.resetFilters();
+            debounced();
+          }}
         >
           <div className="fill-blue-500 w-4 h-4">
             <DeleteIcon />
@@ -82,7 +79,10 @@ export function FiltersMenu({
               type="text"
               id="hotelName"
               value={filterStore.hotelName}
-              onChange={(e) => filterStore.setHotelName(e.target.value)}
+              onChange={(e) => {
+                filterStore.setHotelName(e.target.value);
+                debounced();
+              }}
               className="border border-[#DEDEDE] rounded w-[205px] text-xs text-checkout-label leading-[15px] h-8 py-2 px-3 ring-0 focus:ring-0 focus:outline-none"
             />
           </div>
@@ -140,7 +140,7 @@ export function FiltersMenu({
               </div>
 
               <div>
-                <RangeSlider />
+                <RangeSlider onChange={() => debounced()} />
               </div>
             </motion.div>
           </div>
@@ -182,7 +182,10 @@ export function FiltersMenu({
               <div className="flex items-center gap-[5px]">
                 <Checkbox
                   checked={filterStore.starsFilter.includes(1)}
-                  onChange={() => handleSelectStars(1)}
+                  onChange={() => {
+                    handleSelectStars(1);
+                    debounced();
+                  }}
                   id="1"
                   label="1 estrela"
                 />
@@ -205,7 +208,10 @@ export function FiltersMenu({
               <div className="flex items-center gap-[5px]">
                 <Checkbox
                   checked={filterStore.starsFilter.includes(2)}
-                  onChange={() => handleSelectStars(2)}
+                  onChange={() => {
+                    handleSelectStars(2);
+                    debounced();
+                  }}
                   id="2"
                   label="2 estrela"
                 />
@@ -228,7 +234,10 @@ export function FiltersMenu({
               <div className="flex items-center gap-[5px]">
                 <Checkbox
                   checked={filterStore.starsFilter.includes(3)}
-                  onChange={() => handleSelectStars(3)}
+                  onChange={() => {
+                    handleSelectStars(3);
+                    debounced();
+                  }}
                   id="3"
                   label="3 estrela"
                 />
@@ -251,7 +260,10 @@ export function FiltersMenu({
               <div className="flex items-center gap-[5px]">
                 <Checkbox
                   checked={filterStore.starsFilter.includes(4)}
-                  onChange={() => handleSelectStars(4)}
+                  onChange={() => {
+                    handleSelectStars(4);
+                    debounced();
+                  }}
                   id="4"
                   label="4 estrela"
                 />
@@ -274,7 +286,10 @@ export function FiltersMenu({
               <div className="flex items-center gap-[5px]">
                 <Checkbox
                   checked={filterStore.starsFilter.includes(5)}
-                  onChange={() => handleSelectStars(5)}
+                  onChange={() => {
+                    handleSelectStars(5);
+                    debounced();
+                  }}
                   id="5"
                   label="5 estrela"
                 />
@@ -297,7 +312,10 @@ export function FiltersMenu({
               <div className="flex items-center gap-[5px]">
                 <Checkbox
                   checked={filterStore.starsFilter.includes(0)}
-                  onChange={() => handleSelectStars(0)}
+                  onChange={() => {
+                    handleSelectStars(0);
+                    debounced();
+                  }}
                   id="0"
                   label="0 estrela"
                 />
