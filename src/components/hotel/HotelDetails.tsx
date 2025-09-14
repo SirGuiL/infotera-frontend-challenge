@@ -46,14 +46,14 @@ export function HotelDetails({ id }: HotelDetailsProps) {
   }
 
   return (
-    <div className="flex flex-col gap-[41.49px] pt-4 pl-4 pb-[19px] pr-[25px] bg-white rounded-[14px]">
-      <div className="flex gap-4">
+    <div className="flex flex-col gap-[41.49px] pt-4 pl-4 pb-[19px] pr-4 md:pr-[25px] bg-white rounded-[14px]">
+      <div className="flex flex-col md:flex-row gap-4">
         <Image
           src={data.hotel.image}
           alt={data.hotel.name}
           width={447}
           height={312}
-          className="rounded-[14px] max-h-[312px] max-w-[447px]"
+          className="rounded-[14px] w-full md:w-auto md:max-h-[312px] md:max-w-[447px]"
         />
 
         <div>

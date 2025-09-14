@@ -18,8 +18,8 @@ export function RoomCard({
   onBookRoom,
 }: RoomCardProps) {
   return (
-    <div className="flex gap-10.5 items-center bg-light-gray p-[17px] pb-4 pl-[23px] pr-[15px] rounded-[14px]">
-      <div className="flex flex-col flex-1 gap-[3px]">
+    <div className="flex flex-col md:flex-row gap-4 md:gap-10.5 items-center bg-light-gray p-[17px] pb-4 pl-[23px] pr-[15px] rounded-[14px]">
+      <div className="flex flex-col items-center md:items-start flex-1 gap-[3px]">
         <span className="font-semibold text-default-text text-base leading-[1.625rem]">
           {name}
         </span>
@@ -57,7 +57,7 @@ export function RoomCard({
         </span>
       </div>
 
-      <Button onClick={onBookRoom}>
+      <Button onClick={onBookRoom} className="w-full md:w-auto">
         <span className="font-normal text-xs">Reservar Agora</span>
       </Button>
     </div>
