@@ -8,6 +8,10 @@ type SortBy = {
   direction: SortDirection;
 };
 
+type quantityOfStarsType = {
+  [key: number]: number;
+};
+
 interface FilterState {
   hotelName: string;
   setHotelName: (hotelName: string) => void;
@@ -16,6 +20,9 @@ interface FilterState {
   setMinPrice: (minPrice: number) => void;
   maxPrice: number;
   setMaxPrice: (maxPrice: number) => void;
+
+  quantityOfStars: quantityOfStarsType;
+  setQuantityOfStars: (quantityOfStars: quantityOfStarsType) => void;
 
   starsFilter: number[];
   setStarsFilter: (starsFilter: number[]) => void;
@@ -39,6 +46,10 @@ export const useFilterStore = create<FilterState>((set) => ({
   setMinPrice: (minPrice: number) => set({ minPrice }),
   maxPrice: 1200,
   setMaxPrice: (maxPrice: number) => set({ maxPrice }),
+
+  quantityOfStars: {},
+  setQuantityOfStars: (quantityOfStars: quantityOfStarsType) =>
+    set({ quantityOfStars }),
 
   starsFilter: [],
   setStarsFilter: (starsFilter: number[]) => set({ starsFilter }),

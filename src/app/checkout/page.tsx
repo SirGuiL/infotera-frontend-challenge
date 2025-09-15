@@ -1,6 +1,6 @@
 "use client";
 
-import { useBookingStore } from "@/store/bookingStore";
+import { useBookingStore } from "@/stores/bookingStore";
 
 import { FinishedCheckout } from "@/components/checkout/FinishedCheckout";
 import { CheckoutForm } from "@/components/checkout/CheckoutForm";

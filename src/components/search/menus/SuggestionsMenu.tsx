@@ -3,28 +3,23 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
-import { useSearchStore } from "@/store/searchStore";
-import { SuggestionsResponseDTO } from "@/dto/SuggestionsResponseDTO";
+import { useSearchStore } from "@/stores/searchStore";
+import { fetchSuggestions } from "@/services/suggestionsService";
 
-import { SuggestionMenuItem } from "@/components/search/SuggestionMenuItem";
-import { SuggestionMenuError } from "@/components/search/SuggestionMenuError";
-import { SuggestionMenuLoading } from "@/components/search/SuggestionMenuLoading";
+import { SuggestionMenuItem } from "@/components/search/menus/SuggestionMenuItem";
+import { SuggestionMenuError } from "@/components/search/menus/SuggestionMenuError";
+import { SuggestionMenuLoading } from "@/components/search/menus/SuggestionMenuLoading";
 
 export function SuggestionsMenu() {
   const [debouncedQuery, setDebouncedQuery] = useState("");
   const searchStore = useSearchStore();
 
-  async function fetchSuggestions() {
-    const res = await fetch(
-      `http://localhost:3333/suggestions?q=${debouncedQuery}`
-    );
-
-    return (await res.json()) as SuggestionsResponseDTO[];
-  }
-
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["suggestions", debouncedQuery],
-    queryFn: fetchSuggestions,
+    queryFn: () =>
+      fetchSuggestions({
+        query: debouncedQuery,
+      }),
   });
 
   useEffect(() => {

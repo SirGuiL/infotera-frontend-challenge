@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 
 import { HeaderHome } from "./HeaderHome";
 import { HeaderSecondary } from "./HeaderSecondary";
-import { useBookingStore } from "@/store/bookingStore";
+import { useBookingStore } from "@/stores/bookingStore";
 
 export function Header() {
   const bookingStore = useBookingStore();

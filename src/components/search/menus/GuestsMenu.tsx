@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { Separator } from "@/components/ui/Separator";
 
 import { useClickOutside } from "@/hooks/useClickOutside";
-import { useSearchStore } from "@/store/searchStore";
+import { useSearchStore } from "@/stores/searchStore";
 
 interface GuestsMenuProps {
   handleCloseGuestsMenu: () => void;

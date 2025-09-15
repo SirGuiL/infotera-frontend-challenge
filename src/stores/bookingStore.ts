@@ -41,7 +41,7 @@ export const useBookingStore = create<BookingState>()(
       setHydrated: (hydrated: boolean) => set({ isHydrated: hydrated }),
     }),
     {
-      name: "booking-storage",
+      name: "@infotravel:booking-store",
       partialize: (state) => ({
         selectedRoom: state.selectedRoom,
         selectedHotel: state.selectedHotel,
@@ -50,6 +50,7 @@ export const useBookingStore = create<BookingState>()(
       onRehydrateStorage: () => (state) => {
         if (state) {
           state.setHydrated(true);
+          state.setIsFinishedCheckout(false);
         }
       },
     }

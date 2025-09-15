@@ -1,16 +1,15 @@
 "use client";
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 
-import { LocationIcon } from "@/components/icons/Location";
-import { Rating } from "@/components/ui/Rating";
-import { RoomCard } from "@/components/hotel/RoomCard";
 import { HotelDetailsSkeleton } from "@/components/hotel/HotelDetailsSkeleton";
+import { HotelInfo } from "@/components/hotel/HotelInfo";
+import { HotelRooms } from "@/components/hotel/HotelRooms";
 
 import { Room } from "@/dto/HotelResponseDTO";
-import { useBookingStore } from "@/store/bookingStore";
+import { useBookingStore } from "@/stores/bookingStore";
+import { getHotel } from "@/services/hotelService";
 
 interface HotelDetailsProps {
   id: string;
@@ -22,14 +21,8 @@ export function HotelDetails({ id }: HotelDetailsProps) {
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["hotel", id],
-    queryFn: getHotel,
+    queryFn: () => getHotel(id),
   });
-
-  async function getHotel() {
-    const res = await fetch(`http://localhost:3333/hotels/${id}`);
-
-    return res.json();
-  }
 
   async function handleBookRoom(room: Room) {
     bookingStore.setSelectedRoom(room);
@@ -47,57 +40,15 @@ export function HotelDetails({ id }: HotelDetailsProps) {
 
   return (
     <div className="flex flex-col gap-[41.49px] pt-4 pl-4 pb-[19px] pr-4 md:pr-[25px] bg-white rounded-[14px]">
-      <div className="flex flex-col md:flex-row gap-4">
-        <Image
-          src={data.hotel.image}
-          alt={data.hotel.name}
-          width={447}
-          height={312}
-          className="rounded-[14px] w-full md:w-auto md:max-h-[312px] md:max-w-[447px]"
-        />
+      <HotelInfo
+        address={data.hotel.address}
+        description={data.hotel.description}
+        image={data.hotel.image}
+        name={data.hotel.name}
+        stars={data.hotel.stars}
+      />
 
-        <div>
-          <h1 className="font-semibold text-default-text text-xl leading-[1.625rem]">
-            {data.hotel.name}
-          </h1>
-
-          <div className="mt-[-6px] flex items-center gap-[5.08px]">
-            <div className="stroke-caption w-[12.2px] h-[13px]">
-              <LocationIcon />
-            </div>
-
-            <h2 className="text-caption text-xs leading-[1.625rem]">
-              {data.hotel.address}
-            </h2>
-          </div>
-
-          <div className="mt-[7px]">
-            <Rating stars={data.hotel.stars} />
-          </div>
-
-          <p
-            className="text-xs leading-[1.625rem] text-caption mt-[13px]"
-            dangerouslySetInnerHTML={{ __html: data.hotel.description }}
-          />
-        </div>
-      </div>
-
-      <div className="flex flex-col gap-[13px]">
-        <h3 className="font-semibold text-default-text text-xl leading-[1.625rem]">
-          Quartos disponíveis
-        </h3>
-
-        {data.rooms.map((room: Room) => (
-          <RoomCard
-            key={room.roomType.name}
-            name={room.roomType.name}
-            price={room.price.amount}
-            currency={room.price.currency}
-            refundable={room.cancellationPolicies.refundable}
-            onBookRoom={() => handleBookRoom(room)}
-          />
-        ))}
-      </div>
+      <HotelRooms rooms={data.rooms} handleBookRoom={handleBookRoom} />
     </div>
   );
 }

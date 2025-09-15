@@ -1,6 +1,6 @@
 import { AnimatePresence } from "motion/react";
 import { useClickOutside } from "@/hooks/useClickOutside";
-import { SortField, useFilterStore } from "@/store/filterStore";
+import { SortField, useFilterStore } from "@/stores/filterStore";
 import { OrderMenuItem } from "./OrderMenuItem";
 import { useDebounce } from "@/hooks/useDebounce";
 

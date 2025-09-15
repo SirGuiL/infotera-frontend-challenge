@@ -1,5 +1,5 @@
 import { HTMLAttributes } from "react";
-import { LocationIcon } from "../icons/Location";
+import { LocationIcon } from "../../icons/Location";
 
 interface SuggestionMenuItemProps extends HTMLAttributes<HTMLDivElement> {
   name: string;

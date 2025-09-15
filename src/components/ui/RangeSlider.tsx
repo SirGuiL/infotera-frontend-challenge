@@ -1,4 +1,4 @@
-import { useFilterStore } from "@/store/filterStore";
+import { useFilterStore } from "@/stores/filterStore";
 import { useState, useRef, useEffect, useCallback } from "react";
 
 interface RangeSliderProps {
@@ -11,6 +11,8 @@ export function RangeSlider({ onChange }: RangeSliderProps) {
   const sliderRef = useRef<HTMLDivElement>(null);
   const [dragging, setDragging] = useState<"min" | "max" | null>(null);
 
+  const { setMinPrice, setMaxPrice, minPrice, maxPrice } = useFilterStore();
+
   const min = 0;
   const max = 1200;
 
@@ -21,37 +23,43 @@ export function RangeSlider({ onChange }: RangeSliderProps) {
   }, [onChange]);
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!sliderRef.current || !dragging) return;
+    if (!dragging) return;
+
+    const handleMove = (clientX: number) => {
+      if (!sliderRef.current) return;
       const rect = sliderRef.current.getBoundingClientRect();
-      const x = e.clientX - rect.left;
+      const x = clientX - rect.left;
       const percent = Math.min(Math.max(x / rect.width, 0), 1);
       const value = Math.round(percent * (max - min) + min);
 
       if (dragging === "min") {
-        filterStore.setMinPrice(Math.min(value, filterStore.maxPrice - 1));
-        return;
+        setMinPrice(Math.min(value, maxPrice - 1));
+      } else {
+        setMaxPrice(Math.max(value, minPrice + 1));
       }
-
-      filterStore.setMaxPrice(Math.max(value, filterStore.minPrice + 1));
     };
 
-    const handleMouseUp = () => {
-      if (dragging) {
-        handleChange();
-      }
+    const handleMouseMove = (e: MouseEvent) => handleMove(e.clientX);
+    const handleTouchMove = (e: TouchEvent) => handleMove(e.touches[0].clientX);
 
+    const handleEnd = () => {
+      handleChange();
       setDragging(null);
     };
 
     window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener("mouseup", handleEnd);
+    window.addEventListener("touchmove", handleTouchMove);
+    window.addEventListener("touchend", handleEnd);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("mouseup", handleEnd);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleEnd);
     };
-  }, [dragging, filterStore, handleChange]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dragging]);
 
   return (
     <div className="w-full px-4 h-4 flex items-center">
@@ -74,12 +82,14 @@ export function RangeSlider({ onChange }: RangeSliderProps) {
           className="absolute w-4 h-4 border-0 bg-primary rounded-full -top-1.5 cursor-pointer shadow"
           style={{ left: `calc(${getPercent(filterStore.minPrice)}% - 12px)` }}
           onMouseDown={() => setDragging("min")}
+          onTouchStart={() => setDragging("min")}
         ></div>
 
         <div
           className="absolute w-4 h-4 border-0 bg-primary rounded-full -top-1.5 cursor-pointer shadow"
           style={{ left: `calc(${getPercent(filterStore.maxPrice)}% - 12px)` }}
           onMouseDown={() => setDragging("max")}
+          onTouchStart={() => setDragging("max")}
         ></div>
       </div>
     </div>

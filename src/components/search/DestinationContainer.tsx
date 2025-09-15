@@ -1,5 +1,5 @@
 import { Skeleton } from "@/components/ui/Skeleton";
-import { useSearchStore } from "@/store/searchStore";
+import { useSearchStore } from "@/stores/searchStore";
 
 interface DestinationContainerProps {
   isLoading: boolean;

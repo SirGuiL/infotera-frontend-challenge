@@ -1,7 +1,7 @@
 "use client";
 
 import { CheckoutFormData } from "@/schemas/checkoutSchema";
-import { useBookingStore } from "@/store/bookingStore";
+import { useBookingStore } from "@/stores/bookingStore";
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 

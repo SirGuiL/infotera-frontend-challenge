@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-interface SearchState {
+export interface SearchState {
   destination: string;
   setDestination: (destination: string) => void;
 

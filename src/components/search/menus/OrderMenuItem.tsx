@@ -22,7 +22,7 @@ export function OrderMenuItem({
       whileTap={{ scale: 0.95 }}
       {...props}
     >
-      <span>{label}</span>
+      <span className="text-gray-800">{label}</span>
 
       <motion.div
         className="fill-gray-800 w-4 h-4"

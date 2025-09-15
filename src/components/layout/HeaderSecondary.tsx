@@ -2,6 +2,7 @@ import { useRouter } from "next/navigation";
 
 import { HomeIcon } from "@/components/icons/Home";
 import { SigninIcon } from "@/components/icons/Signin";
+import { HeaderButton } from "@/components/ui/HeaderButton";
 
 export function HeaderSecondary() {
   const router = useRouter();
@@ -12,28 +13,13 @@ export function HeaderSecondary() {
         <h1 className="font-bold text-xl text-default-text">infotravel</h1>
 
         <div className="flex items-center gap-4.5">
-          <button
-            className="flex items-center cursor-pointer gap-2"
+          <HeaderButton
+            icon={<HomeIcon />}
+            text="Página Inicial"
             onClick={() => router.push("/")}
-          >
-            <div className="stroke-caption h-3 w-3">
-              <HomeIcon />
-            </div>
+          />
 
-            <span className="font-medium text-caption text-sm">
-              Página Inicial
-            </span>
-          </button>
-
-          <button className="flex items-center cursor-pointer gap-2">
-            <div className="stroke-caption h-3 w-3">
-              <SigninIcon />
-            </div>
-
-            <span className="font-medium text-caption text-sm">
-              Iniciar Sessão
-            </span>
-          </button>
+          <HeaderButton icon={<SigninIcon />} text="Iniciar Sessão" />
         </div>
       </div>
     </div>

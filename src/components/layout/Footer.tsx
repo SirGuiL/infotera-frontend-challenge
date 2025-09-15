@@ -1,6 +1,6 @@
 "use client";
 
-import { useBookingStore } from "@/store/bookingStore";
+import { useBookingStore } from "@/stores/bookingStore";
 
 export function Footer() {
   const bookingStore = useBookingStore();

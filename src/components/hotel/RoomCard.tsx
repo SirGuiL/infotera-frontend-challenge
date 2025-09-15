@@ -1,6 +1,5 @@
-import { CheckCircleIcon } from "@/components/icons/CheckCircle";
-import { XCircleIcon } from "@/components/icons/XCircle";
 import { Button } from "@/components/ui/Button";
+import { CancellationType } from "@/components/ui/CancellationType";
 
 interface RoomCardProps {
   name: string;
@@ -24,21 +23,7 @@ export function RoomCard({
           {name}
         </span>
 
-        <div className="flex items-center gap-2">
-          {refundable ? (
-            <div className="stroke-primary w-3 h-3">
-              <CheckCircleIcon />
-            </div>
-          ) : (
-            <div className="stroke-red-custom w-3 h-3">
-              <XCircleIcon />
-            </div>
-          )}
-
-          <span className={refundable ? "text-primary" : "text-red-custom"}>
-            {refundable ? "Cancelamento gratuito" : "Multa de cancelamento"}
-          </span>
-        </div>
+        <CancellationType refundable={refundable} />
       </div>
 
       <div className="flex flex-col">

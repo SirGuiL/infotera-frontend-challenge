@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 
 import { CheckoutFormData } from "@/schemas/checkoutSchema";
-import { useBookingStore } from "@/store/bookingStore";
+import { useBookingStore } from "@/stores/bookingStore";
 
 import { GuestInfoForm } from "@/components/checkout/GuestInfoForm";
 import { ContactForm } from "@/components/checkout/ContactForm";
