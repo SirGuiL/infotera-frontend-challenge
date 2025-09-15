@@ -10,7 +10,7 @@ interface fetchHotelsParams {
 }
 
 async function fetchHotels(params: fetchHotelsParams) {
-  const url = new URL("http://localhost:3333/hotels");
+  const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/hotels`);
   const queryParams = new URLSearchParams();
 
   if (params.name) queryParams.append("q", params.name);
@@ -53,7 +53,7 @@ function formatField(field: SortField | undefined) {
 }
 
 async function getHotel(id: string) {
-  const res = await fetch(`http://localhost:3333/hotels/${id}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/hotels/${id}`);
 
   return res.json();
 }

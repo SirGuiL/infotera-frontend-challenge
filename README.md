@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Como rodar o projeto
 
-## Getting Started
+## Pré-requisitos
 
-First, run the development server:
+- Node.js >= 21
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Instalação
+
+```
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Variáveis de ambiente
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Crie um arquivo .env
+- Caso esteja utilizando o JSON server rodando na porta 3333, utilize esse .env:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+NEXT_PUBLIC_API_URL=http://localhost:3333
+```
 
-## Learn More
+## Rodando o projeto
 
-To learn more about Next.js, take a look at the following resources:
+```
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Acesse: http://localhost:3000
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Build e produção
 
-## Deploy on Vercel
+```
+npm run build
+npm start
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Tecnologias utilizadas
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **React** - 19.1.0
+- **Next.js** - 15.5.2
+- **TypeScript** - ^5
+- **TailwindCSS** - ^4
+- **React Hook Form** - ^7.62.0
+- **Zod** - ^4.1.5
+- **Motion** - ^12.23.12
+- **Zustand** - ^5.0.8
+- **React Query** - ^5.87.1
+- **date-fns** - ^4.1.0
+- **Cypress** - ^15.2.0
+- **Faker.js** - ^10.0.0
+- **ESLint** - ^9
+
+# Testes E2E
+
+Desenvolvi os teste end-to-end utilizando Cypress
+
+```
+npm run test:e2e
+```
+
+## Testes criados
+
+- Foram criados testes para as seguintes funcionalidades:
+
+  - Checkout
+  - Filtros
+  - Busca
+
+- Utilizei fixtures e intercepts para simular requisições HTTP.
+- Configurei os testes para rodarem duas vezes, uma vez testando a resolução de 1920x1080 (desktop) e outra na resolução 414x896 (mobile)
+
+# Estrutura do projeto
+
+```
+src/app/                  # Páginas do Next.js (App Router)
+src/components/           # Componentes reutilizáveis
+src/contexts/             # Contextos personalizados
+src/dto/                  # Tipagens de retorno da API
+src/hooks/                # Hooks personalizados
+src/providers/            # Componentes de integração global
+src/schemas/              # Schemas do Zod para validações
+src/services/             # Lógica de consumo da API
+src/stores/               # Estado global com Zustand
+src/types/                # Tipagens globais
+src/utils/                # Funções utilitárias
+cypress/                  # Testes E2E
+```

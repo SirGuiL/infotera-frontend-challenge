@@ -5,7 +5,9 @@ interface fetchSuggestionsParams {
 }
 
 async function fetchSuggestions({ query }: fetchSuggestionsParams) {
-  const res = await fetch(`http://localhost:3333/suggestions?q=${query}`);
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/suggestions?q=${query}`
+  );
 
   return (await res.json()) as SuggestionsResponseDTO[];
 }
