@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect } from "react";
 import { SearchState } from "@/stores/searchStore";
 import { useSearchParams } from "next/navigation";

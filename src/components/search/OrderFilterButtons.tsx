@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 
 import { FilterIcon } from "@/components/icons/Filter";

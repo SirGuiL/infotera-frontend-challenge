@@ -1,3 +1,5 @@
+"use client";
+
 import { useRef, useCallback, useEffect } from "react";
 
 export function useDebounce<Func extends (...args: unknown[]) => void>(
