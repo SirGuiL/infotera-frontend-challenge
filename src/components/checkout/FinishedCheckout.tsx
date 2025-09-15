@@ -1,12 +1,17 @@
 "use client";
 
+import { CheckoutFormData } from "@/schemas/checkoutSchema";
 import { useBookingStore } from "@/store/bookingStore";
 import { useEffect } from "react";
+import { useFormContext } from "react-hook-form";
 
 export function FinishedCheckout() {
-  const setIsFinishedCheckout = useBookingStore(
-    (state) => state.setIsFinishedCheckout
-  );
+  const { getValues } = useFormContext<CheckoutFormData>();
+
+  const bookingStore = useBookingStore();
+  const { setIsFinishedCheckout, selectedHotel } = bookingStore;
+
+  const formData = getValues();
 
   useEffect(() => {
     setIsFinishedCheckout(true);
@@ -24,19 +29,19 @@ export function FinishedCheckout() {
         </h1>
 
         <p className="text-white text-sm md:text-xl md:leading-8">
-          <b className="font-bold">Hotel:</b> Stadshotel Steegoversloot
+          <b className="font-bold">Hotel:</b> {selectedHotel?.hotel.name}
           <br />
           <br />
           <b className="font-bold">Hospede:</b>
           <br />
-          Nome: Jose Silva
+          Nome: {formData.name} {formData.lastName}
           <br />
           <br />
           <b className="font-bold">Contato:</b>
           <br />
-          Nome: Maria SIlva
+          Nome: {formData.contactName}
           <br />
-          E-mail: teste@teste.com
+          E-mail: {formData.contactEmail}
         </p>
       </div>
     </div>
