@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { HotelDetailsSkeleton } from "@/components/hotel/HotelDetailsSkeleton";
 import { HotelInfo } from "@/components/hotel/HotelInfo";
 import { HotelRooms } from "@/components/hotel/HotelRooms";
+import { HotelDetailsError } from "@/components/hotel/HotelDetailsError";
 
 import { Room } from "@/dto/HotelResponseDTO";
 import { useBookingStore } from "@/stores/bookingStore";
@@ -35,7 +36,7 @@ export function HotelDetails({ id }: HotelDetailsProps) {
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <HotelDetailsError />;
   }
 
   return (
