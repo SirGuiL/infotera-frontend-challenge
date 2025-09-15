@@ -1,13 +1,25 @@
 "use client";
 
+import { useEffect } from "react";
+
 import { useBookingStore } from "@/stores/bookingStore";
 
 import { FinishedCheckout } from "@/components/checkout/FinishedCheckout";
 import { CheckoutForm } from "@/components/checkout/CheckoutForm";
 import { CheckoutFormProvider } from "@/contexts/CheckoutFormContext";
+import { useRouter } from "next/navigation";
 
 export default function CheckoutPage() {
   const bookingStore = useBookingStore();
+  const router = useRouter();
+
+  const { isHydrated, selectedRoom } = bookingStore;
+
+  useEffect(() => {
+    if (!selectedRoom && isHydrated) {
+      router.push("/");
+    }
+  }, [selectedRoom, router, isHydrated]);
 
   if (bookingStore.isFinishedCheckout) {
     return (
