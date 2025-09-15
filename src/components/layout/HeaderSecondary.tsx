@@ -12,7 +12,7 @@ export function HeaderSecondary() {
       <div className="flex justify-between px-4 md:px-16 max-w-360 w-full">
         <h1 className="font-bold text-xl text-default-text">infotravel</h1>
 
-        <div className="flex items-center gap-4.5">
+        <div className="flex items-center gap-2 md:gap-4.5">
           <HeaderButton
             icon={<HomeIcon />}
             text="Página Inicial"

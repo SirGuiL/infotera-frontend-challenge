@@ -61,6 +61,7 @@ export function GuestsMenu({ handleCloseGuestsMenu }: GuestsMenuProps) {
             <button
               className="flex items-center justify-center h-5 w-5 md:h-[15px] md:w-[15px] bg-light-gray rounded-full cursor-pointer"
               onClick={() => setAdultGuests(adultGuests + 1)}
+              data-cy="add-adult-button"
             >
               <span className="text-xs md:text-[8px] font-semibold">+</span>
             </button>
@@ -87,6 +88,7 @@ export function GuestsMenu({ handleCloseGuestsMenu }: GuestsMenuProps) {
             <button
               className="flex items-center justify-center h-5 w-5 md:h-[15px] md:w-[15px] bg-light-gray rounded-full cursor-pointer"
               onClick={() => setChildGuests(childGuests + 1)}
+              data-cy="add-children-button"
             >
               <span className="text-xs md:text-[8px] font-semibold">+</span>
             </button>

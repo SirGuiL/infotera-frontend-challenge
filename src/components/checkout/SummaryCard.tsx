@@ -69,7 +69,10 @@ export function SummaryCard() {
             </span>
 
             <span className="text-checkout-label text-[13px] leading-4 font-semibold">
-              R$ 670,08
+              {tax.toLocaleString("pt-BR", {
+                style: "currency",
+                currency: bookingStore.selectedRoom?.price.currency || "BRL",
+              })}
             </span>
           </div>
 

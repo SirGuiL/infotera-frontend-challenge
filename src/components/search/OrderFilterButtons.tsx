@@ -48,6 +48,7 @@ export function OrderFilterButtons({ refetch }: OrderFilterButtonsProps) {
           className="stroke-primary w-[49px] h-9.5 flex items-center justify-center pl-0 pr-0"
           variant="secondary"
           onClick={() => setIsFilterMenuOpen(true)}
+          data-cy="filter-button"
         >
           <div className="min-w-6 max-w-6 h-6">
             <FilterIcon />

@@ -83,6 +83,7 @@ export function RangeSlider({ onChange }: RangeSliderProps) {
           style={{ left: `calc(${getPercent(filterStore.minPrice)}% - 12px)` }}
           onMouseDown={() => setDragging("min")}
           onTouchStart={() => setDragging("min")}
+          data-cy="min-price-slider"
         ></div>
 
         <div

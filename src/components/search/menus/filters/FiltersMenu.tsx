@@ -83,6 +83,7 @@ export function FiltersMenu({
                 debounced();
               }}
               className="border border-[#DEDEDE] rounded w-[205px] text-xs text-checkout-label leading-[15px] h-8 py-2 px-3 ring-0 focus:ring-0 focus:outline-none"
+              data-cy="filter-hotel-name"
             />
           </div>
 

@@ -1,0 +1,64 @@
+{
+  "id": 32458754,
+  "hotel": {
+    "name": "Canggu Village",
+    "address": "Jalan Pantai Batu Bolong No. 78, Canggu, Bali, 80361",
+    "stars": 3,
+    "image": "https://images.trvl-media.com/hotels/33000000/32460000/32458800/32458754/5359e5be.jpg?impolicy=resizecrop&rw=1200&ra=fit",
+    "description": "Bed and breakfast 3 estrelas no centro de Kuta Utara<br/>Aproveite as seguintes comodidades em Canggu Village: café da manhã feito na hora grátis, bar ao lado da piscina, and academia. Saboreie pratos deliciosos em Eat Me, restaurante que fica na propriedade. Os hóspedes podem ficar on-line com o Wi-Fi grátis nas áreas comuns."
+  },
+  "lowestPrice": {
+    "currency": "BRL",
+    "amount": 233
+  },
+  "rooms": [
+    {
+      "roomType": {
+        "name": "Quarto duplo standard"
+      },
+      "price": {
+        "currency": "BRL",
+        "amount": 233.01
+      },
+      "cancellationPolicies": {
+        "refundable": true
+      }
+    },
+    {
+      "roomType": {
+        "name": "Quarto casal standard"
+      },
+      "price": {
+        "currency": "BRL",
+        "amount": 223.33
+      },
+      "cancellationPolicies": {
+        "refundable": true
+      }
+    },
+    {
+      "roomType": {
+        "name": "Quarto casal superior, Acesso à piscina"
+      },
+      "price": {
+        "currency": "BRL",
+        "amount": 274.58
+      },
+      "cancellationPolicies": {
+        "refundable": false
+      }
+    },
+    {
+      "roomType": {
+        "name": "Quarto duplo superior, Acesso à piscina"
+      },
+      "price": {
+        "currency": "BRL",
+        "amount": 332.12
+      },
+      "cancellationPolicies": {
+        "refundable": false
+      }
+    }
+  ]
+}

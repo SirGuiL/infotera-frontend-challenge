@@ -42,6 +42,7 @@ export function DestinationInput({ inputRef }: DestinationInputProps) {
           setIsSuggestionsMenuOpen(false);
         }}
         ref={inputRef}
+        name="destination"
       />
 
       <Menu isOpen={isSuggestionsMenuOpen} marginTop="top-3">
